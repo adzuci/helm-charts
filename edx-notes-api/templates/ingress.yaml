@@ -1,19 +1,21 @@
-{{- if .Values.app.ingress.enabled -}}
 {{- $fullName := include "notes.fullname" . -}}
+{{- $notesLabels := include "notes.labels" . -}}
+{{- range $index, $ingress := .Values.app.ingresses }}
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-{{ $index }}
   labels:
-{{ include "notes.labels" . | indent 4 }}
-  {{- with .Values.app.ingress.annotations }}
+{{ $notesLabels | indent 4 }}
+  {{- with $ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.app.ingress.tls }}
+{{- if $ingress.tls }}
   tls:
-  {{- range .Values.app.ingress.tls }}
+  {{- range $ingress.tls }}
     - hosts:
       {{- range .hosts }}
         - {{ . | quote }}
@@ -22,7 +24,7 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.app.ingress.hosts }}
+  {{- range $ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -34,3 +36,4 @@ spec:
         {{- end }}
   {{- end }}
 {{- end }}
+
