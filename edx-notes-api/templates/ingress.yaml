@@ -1,6 +1,7 @@
 {{- $fullName := include "notes.fullname" . -}}
 {{- $notesLabels := include "notes.labels" . -}}
 {{- range $index, $ingress := .Values.app.ingresses }}
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
