@@ -136,6 +136,7 @@ mysql:
 migrations:
   enabled: true
   migrationContainerName: edx-notes-api-migrations
+  maxNumberOfSeconds: 60
 
 newrelic:
   enabled: false

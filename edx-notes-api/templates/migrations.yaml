@@ -1,0 +1,37 @@
+{{ if .Values.migrations.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.migrations.migrationContainerName }}
+  annotations:
+    helm.sh/hook-delete-policy: hook-succeeded
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    name: {{ .Values.migrations.migrationContainerName }}
+    spec: 
+      volumes:
+        - name: {{ include "notes.applicationSecretName" . }}
+          secret:
+            secretName: {{ include "notes.applicationSecretName" . }}
+      restartPolicy: Never
+      containers:
+        - name: {{ .Values.migrations.migrationContainerName }}
+          image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
+          command: ["python3", "manage.py", "migrate"]
+          restartPolicy: Never
+          activeDeadlineSeconds: {{ .Values.migrations.maxNumberOfSeconds }}
+          volumeMounts:
+            - mountPath: "/edx/etc"
+              name: {{ include "notes.applicationSecretName" . }}
+              readOnly: true
+          resources:
+            {{- toYaml .Values.app.resources | nindent 12 }}
+{{- end }} # Values.migrations.enabled
+
+
+
+
+
+
