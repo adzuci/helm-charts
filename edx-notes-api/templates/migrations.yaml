@@ -33,9 +33,3 @@ spec:
           resources:
             {{- toYaml .Values.app.resources | nindent 12 }}
 {{- end }} # Values.migrations.enabled
-
-
-
-
-
-
