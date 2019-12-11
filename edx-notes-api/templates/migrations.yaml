@@ -8,6 +8,7 @@ metadata:
     helm.sh/hook-delete-policy: hook-succeeded
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
+  ttlSecondsAfterFinished: 0
   template:
     name: {{ .Values.migrations.migrationContainerName }}
     spec: 
@@ -16,12 +17,15 @@ spec:
           secret:
             secretName: {{ include "notes.applicationSecretName" . }}
       restartPolicy: Never
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.31.0
+          command: ['sh', '-c', 'until nslookup {{ .Values.app.config.DATABASES.default.HOST }}; do echo waiting for {{ .Values.app.config.DATABASES.default.HOST }}; sleep 2; done;']
       containers:
         - name: {{ .Values.migrations.migrationContainerName }}
           image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
           command: ["python3", "manage.py", "migrate"]
           restartPolicy: Never
-          activeDeadlineSeconds: {{ .Values.migrations.maxNumberOfSeconds }}
           volumeMounts:
             - mountPath: "/edx/etc"
               name: {{ include "notes.applicationSecretName" . }}
