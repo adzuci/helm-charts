@@ -16,13 +16,6 @@ app:
     limits:
       cpu: 100m
       memory: 512Mi
-  extraInitContainers:
-    - name: init-mysql-dns
-      image: busybox:1.31.0
-      command: ['sh', '-c', 'until nslookup edx-notes-api-mysql; do echo waiting for edx-notes-api-mysql; sleep 2; done;']
-    - name: init-elasticsearch-dns
-      image: busybox:1.31.0
-      command: ['sh', '-c', 'until nslookup edx-notes-api-elasticsearch-master; do echo waiting for edx-notes-api-elasticsearch-master; sleep 2; done;']
 elasticsearch:
   enabled: true
   # Permit co-located instances for solitary minikube virtual machines.

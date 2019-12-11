@@ -61,21 +61,27 @@ spec:
       resources:
             {{- toYaml .Values.app.resources | nindent 12 }}
       initContainers:
+        - name: wait-for-mysql-dns
+          image: busybox:1.31.0
+          command: ['sh', '-c', 'until nslookup {{ .Values.app.config.DATABASES.default.HOST }}; do echo waiting for {{ .Values.app.config.DATABASES.default.HOST }}; sleep 2; done;']
+        - name: wait-for-elasticsearch-dns
+          image: busybox:1.31.0
+          command: ['sh', '-c', 'until nslookup $(echo {{ .Values.app.config.ELASTICSEARCH_URL }} | cut -d "/" -f 3 | cut -d ":" -f1); do sleep 2; done;']
+        {{ if .Values.migrations.enabled }}
+        - name: wait-for-migrations-to-run
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          command: ['sh', '-c', 'python3 manage.py showmigrations | grep -v "\[ \]"']
+          volumeMounts:
+            - mountPath: "/edx/etc"
+              name: {{ include "notes.applicationSecretName" . }}
+              readOnly: true
+          resources:
+            {{- toYaml .Values.app.resources | nindent 12 }}
+        {{- end }} # Values.migrations.enabled
         {{- if .Values.app.extraInitContainers }}
         {{ tpl (toYaml .Values.app.extraInitContainers) . | nindent 6 }}
-        {{- end }}
-        {{ if .Values.migrations.enabled }}
-      - name: {{ .Values.migrations.migrationContainerName }}
-        image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
-        imagePullPolicy: {{ .Values.app.image.pullPolicy }}
-        command: ["python", "manage.py", "migrate"]
-        volumeMounts:
-          - mountPath: "/edx/etc"
-            name: {{ include "notes.applicationSecretName" . }}
-            readOnly: true
-        resources:
-          {{- toYaml .Values.app.resources | nindent 12 }}
-        {{- end }} # Values.migrations.enabled
+        {{- end }} # Values.app.extraInitContainers
       {{- with .Values.app.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
