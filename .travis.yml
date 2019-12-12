@@ -1,27 +1,42 @@
 language: generic
-
 dist: bionic
 sudo: false
-
 env:
   global:
-    - HELM_VERSION="v2.16.0"
-
+  - HELM_VERSION="v2.16.0"
 install:
-  - sudo apt-get update
-  - sudo apt-get install -y yamllint
-  - wget http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz -O /tmp/helm.tar.gz
-  - tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1
-  - chmod +x /tmp/helm
-
+- sudo apt-get update
+- sudo apt-get install -y yamllint
+- wget http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz
+  -O /tmp/helm.tar.gz
+- tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1
+- chmod +x /tmp/helm
 before_script:
-  - /tmp/helm init --client-only
-  - /tmp/helm repo add elastic https://helm.elastic.co
-  - |
-    for chart in $(find . -name 'requirements.yaml'); do
-      /tmp/helm dep build $(dirname ${chart})
-    done
-
+- "/tmp/helm init --client-only"
+- "/tmp/helm repo add elastic https://helm.elastic.co"
+- |
+  for chart in $(find . -name 'requirements.yaml'); do
+    /tmp/helm dep build $(dirname ${chart})
+  done
 script:
-  - /tmp/helm lint */
-  - /tmp/helm template */ | yamllint -d relaxed /dev/stdin
+- "/tmp/helm lint */"
+- "/tmp/helm template */ | yamllint -d relaxed /dev/stdin"
+deploy:
+  matrix:
+  - provider: script
+    script: |
+      cd ..
+      git checkout https://$GITHUB_ACCESS_TOKEN@github.com/edx/helm-repo
+      cd helm-repo
+      for chart in $(find . -name 'requirements.yaml'); do
+        /tmp/helm dep update $(dirname ${chart})
+        /tmp/helm package $(dirname ${chart})
+      done
+      /tmp/helm repo index .
+      git add .
+      git commit -a -m "$TRAVIS_COMMIT_MESSAGE" --author "Helm Build automation <admin@edx.org>"
+      git push
+    on:
+      branch: master
+  env:
+    secure: YPkIIKOilc0YzgB/RRB+vymrddO4fpOR6xjLMeNKF6dnk5N9twYOq96oCPST3GZ/KZBeEYDDYtyfL4zxXoeYbVv5PGppx8WMw8VqmvyPFukJIxSjpiew73tAfdu8M41TLT2TIFDRhE3SDDNdgpESNGgqWMgM6/DE4P5kym9fY0liqZPxNB9b8gCOsgxUqTXi0EqRjZbb/klAhAMBQGDV9IjqZJpLsqAGUoCJzGFhJgix1T9MBoni03PYA3sutVnZDAt+YAa1ChMZXLP6ZVIO4WkfwJ8mdTCjbwp5lCG20qLjekSVHluftcDYKQRtl0YJkWb9U1dLtj8RNfwPYpjJDwc+Dw9ji/7yR11IyocwXg2+C7grHFEX8WFjSlj4/I5GJqFdZS264Fl+q8I2t/bsb/5Y322wE4s8uSA5mQUT/DJtHh7CGtg5Ae4NRpYw76H3+AxjqAOio+BrOh+Cv+iW+OyMJEjyE2CIznYzYnA13CzKC8FKQydunZSTKti6tqRuO0wuNqDACrhoJJyKoaEr6bQk1AmZIkyDABP/xitU2cJPBZb+6afE32vH4NZ5dM0FexKV5gm1ZB/wVlHkTEN6JxLmYBnQwq5bdVPEfC6uC/mF8iLIw5RNeoqUdUnnzKYvxdWxsOVElCaRbCg4+RBKHsKiqguTMdXxe30RHPQA7WM=
