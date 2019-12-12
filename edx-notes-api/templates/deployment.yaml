@@ -58,8 +58,8 @@ spec:
             - mountPath: "/edx/etc"
               name: {{ include "notes.applicationSecretName" . }}
               readOnly: true
-      resources:
-            {{- toYaml .Values.app.resources | nindent 12 }}
+          resources:
+            {{- toYaml .Values.app.resources | nindent 14 }}
       initContainers:
         - name: wait-for-mysql-dns
           image: busybox:1.31.0
@@ -77,7 +77,7 @@ spec:
               name: {{ include "notes.applicationSecretName" . }}
               readOnly: true
           resources:
-            {{- toYaml .Values.app.resources | nindent 12 }}
+            {{- toYaml .Values.app.resources | nindent 16 }}
         {{- end }} # Values.migrations.enabled
         {{- if .Values.app.extraInitContainers }}
         {{ tpl (toYaml .Values.app.extraInitContainers) . | nindent 6 }}
