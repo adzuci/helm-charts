@@ -13,6 +13,7 @@ install:
   - chmod +x /tmp/helm
 
 before_script:
+  - /tmp/helm init --client-only
   - |
     for chart in $(find . -name 'requirements.yaml'); do
       /tmp/helm dep build $(dirname ${chart})
