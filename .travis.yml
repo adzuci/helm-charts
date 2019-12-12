@@ -14,6 +14,7 @@ install:
 
 before_script:
   - /tmp/helm init --client-only
+  - /tmp/helm repo add elastic https://helm.elastic.co
   - |
     for chart in $(find . -name 'requirements.yaml'); do
       /tmp/helm dep build $(dirname ${chart})
