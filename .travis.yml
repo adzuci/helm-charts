@@ -1,6 +1,6 @@
 language: generic
 
-dist: trusty
+dist: bionic
 sudo: false
 
 env:
@@ -8,6 +8,8 @@ env:
     - HELM_VERSION="v2.16.0"
 
 install:
+  - sudo apt-get update
+  - sudo apt-get install -y yamllint
   - wget http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz -O /tmp/helm.tar.gz
   - tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1
   - chmod +x /tmp/helm
@@ -22,3 +24,4 @@ before_script:
 
 script:
   - /tmp/helm lint */
+  - /tmp/helm template */ | yamllint -d relaxed /dev/stdin
