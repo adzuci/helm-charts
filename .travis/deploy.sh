@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 cd ..
-git clone git@github.com:edx/helm-repo
+git clone https://$GITHUB_ACCESS_TOKEN@github.com/edx/helm-repo
 cd helm-repo
 for chart in $(find ../helm-charts/ -name 'requirements.yaml'); do
   /tmp/helm dep update $(dirname ${chart})
