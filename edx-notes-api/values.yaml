@@ -100,6 +100,7 @@ app:
     NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: 'True'
     NEW_RELIC_APP_NAME: 'notes'
     NEW_RELIC_LICENSE_KEY: ''
+    SECRET_KEY: 'CHANGEME'
 
 # See the Elasticsearch chart provider's website in requirements.yaml for a full list of possible overrides
 # https://github.com/elastic/helm-charts/tree/master/elasticsearch
