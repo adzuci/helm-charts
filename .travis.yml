@@ -14,13 +14,22 @@ install:
 before_script:
 - "/tmp/helm init --client-only"
 - "/tmp/helm repo add elastic https://helm.elastic.co"
+script:
 - |
   for chart in $(find . -name 'requirements.yaml'); do
+    echo "=========== Begin $(dirname ${chart}) ==========="
+
+    set -x
     /tmp/helm dep build $(dirname ${chart})
+    /tmp/helm lint $(dirname ${chart})
+    template=$(/tmp/helm template $(dirname ${chart}))
+    set +x
+
+    # See if the output is valid yaml
+    echo $template | yamllint -d relaxed /dev/stdin
+
+    echo "=========== End $(dirname ${chart}) ==========="
   done
-script:
-- "/tmp/helm lint */"
-- "/tmp/helm template */ | yamllint -d relaxed /dev/stdin"
 deploy:
   provider: script
   script: bash .travis/deploy.sh
