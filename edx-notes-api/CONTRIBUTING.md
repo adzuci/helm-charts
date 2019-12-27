@@ -34,6 +34,7 @@ minikube start --memory=10000 --cpus=6
 ```bash
 eval $(minikube docker-env) # You may want this in your .bashrc or .zshrc
 minikube addons enable ingress
+minikube addons enable metrics-server
 kubectl -n kube-system create serviceaccount tiller
 kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 helm init --service-account=tiller
