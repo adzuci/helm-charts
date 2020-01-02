@@ -46,6 +46,13 @@ app:
   #   cpu: 100m
   #   memory: 1024Mi
 
+  autoscaling:
+    enabled: false
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
+
   nodeSelector: {}
 
   tolerations: []

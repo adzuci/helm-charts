@@ -16,6 +16,9 @@ app:
     limits:
       cpu: 100m
       memory: 512Mi
+  autoscaling:
+    # Change to true to test horizontal pod autoscaling in minikube
+    enabled: false
 elasticsearch:
   enabled: true
   # Permit co-located instances for solitary minikube virtual machines.
