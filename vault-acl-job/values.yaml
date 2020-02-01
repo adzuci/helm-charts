@@ -9,9 +9,3 @@ kubernetes:
 acl_job:
   enabled: true
   role: vault-acl-job
-
-# This is not secure and should not be used in a real cluster.
-# it is only a convenience for developing
-development_bootstrapper:
-  enabled: false
-  root_token: root
