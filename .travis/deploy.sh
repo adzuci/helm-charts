@@ -2,7 +2,7 @@
 cd ..
 git clone https://edx-deployment:${GITHUB_ACCESS_TOKEN}@github.com/edx/helm-repo
 cd helm-repo
-for chart in $(find ../helm-charts/ -name 'requirements.yaml'); do
+for chart in $(find ../helm-charts/ -name 'Chart.yaml'); do
   /tmp/helm dep update $(dirname ${chart})
   /tmp/helm package $(dirname ${chart})
 done

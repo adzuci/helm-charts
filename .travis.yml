@@ -17,7 +17,7 @@ before_script:
 - "/tmp/helm repo add elastic https://helm.elastic.co"
 script:
 - |
-  for chart in $(find . -name 'requirements.yaml'); do
+  for chart in $(find . -name 'Chart.yaml'); do
     echo "=========== Begin $(dirname ${chart}) ==========="
 
     set -x
