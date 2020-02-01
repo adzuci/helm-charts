@@ -1,0 +1,17 @@
+vault:
+  url: http://vault:8200
+  namespace: vault
+  service_account_name: development-vault
+
+kubernetes:
+  url: https://kubernetes.default.svc:443
+
+acl_job:
+  enabled: true
+  role: vault-acl-job
+
+# This is not secure and should not be used in a real cluster.
+# it is only a convenience for developing
+development_bootstrapper:
+  enabled: false
+  root_token: root

@@ -1,0 +1,27 @@
+---
+{{- if .Values.acl_job.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.acl_job.role }}-cm
+  namespace: {{ .Values.vault.namespace }}
+data:
+  start.sh: |
+    #!/bin/sh
+    cd /home/vault
+    export VAULT_ADDR={{ .Values.vault.url }}
+    export HOME=/home/vault
+    
+    if ! vault secrets list | grep 'kv/' | grep kv; then
+      vault secrets enable -path=kv kv-v2
+    fi
+
+    vault policy write newrelic-policy /vault-acl-job/newrelic.hcl
+    vault write auth/kubernetes/role/newrelic bound_service_account_names=newrelic bound_service_account_namespaces=newrelic policies=newrelic-policy ttl=1h
+
+  newrelic.hcl: |
+    path "secret/*"
+    {
+      capabilities = ["read", "list"]
+    }
+{{- end }}

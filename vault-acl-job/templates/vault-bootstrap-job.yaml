@@ -1,0 +1,32 @@
+{{- if .Values.development_bootstrapper.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-bootstrap-job
+  namespace: {{ .Values.vault.namespace }}
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: vault-wait
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nslookup {{ .Values.vault.service_account_name }}; do sleep 2; done;']
+      containers:
+      - name: vault-bootstrap-job
+        image: vault:latest
+        command: [ "/bin/sh", "-c", "--" ]
+        args: [ "/vault-bootstrap-cm/start.sh" ]
+        # args: [ "while true; do echo \"ka thump\"; sleep 30; done;" ]
+        volumeMounts:
+        - name: vault-bootstrap-cm
+          mountPath: /vault-bootstrap-cm
+      volumes:
+        - name: vault-bootstrap-cm
+          configMap:
+            name: vault-bootstrap-cm
+            defaultMode: 0550
+      restartPolicy: OnFailure
+      serviceAccount: {{ .Values.vault.service_account_name }}
+  backoffLimit: 4
+{{- end }}

@@ -1,0 +1,69 @@
+{{- if .Values.development_bootstrapper.enabled }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-bootstrap-cm
+  namespace: {{ .Values.vault.namespace }}
+data:
+  start.sh: |
+    #!/bin/sh
+    export VAULT_TOKEN={{ .Values.development_bootstrapper.root_token }}
+    export VAULT_ADDR={{ .Values.vault.url }}
+
+    if ! vault auth list | grep kubernetes ; then
+      vault auth enable kubernetes
+    fi
+    export SA_JWT_TOKEN=$(cat /run/secrets/kubernetes.io/serviceaccount/token)
+    export SA_CA_CRT=$(cat /run/secrets/kubernetes.io/serviceaccount/ca.crt)
+    export KUBERNETES_URL={{ .Values.kubernetes.url }}
+
+    vault write auth/kubernetes/config token_reviewer_jwt="$SA_JWT_TOKEN" kubernetes_host="$KUBERNETES_URL" kubernetes_ca_cert="$SA_CA_CRT"
+
+    # Disable the default dev mode secret/ mount because we are going to 
+    # let our seeder handle it for environment parity.
+    # This command is idempotent unlike the others, so no check is needed.
+    vault secrets disable secret/
+
+    vault policy write {{ .Values.acl_job.role }}-policy /vault-bootstrap-cm/vault-job-acl-policy.hcl
+    vault write auth/kubernetes/role/{{ .Values.acl_job.role }} bound_service_account_names={{ .Values.acl_job.role }} bound_service_account_namespaces={{ .Values.vault.namespace }} policies={{ .Values.acl_job.role }}-policy ttl=1h
+
+  vault-job-acl-policy.hcl:
+    path "auth/*"
+    {
+      capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+    }
+
+    path "sys/auth/*"
+    {
+      capabilities = ["create", "read", "update", "delete", "sudo"]
+    }
+
+    path "sys/mounts" 
+    { 
+      capabilities = ["read"] 
+    }
+    
+    path "sys/mounts/*" 
+    { 
+      capabilities = ["create", "read", "update", "delete", "sudo"] 
+    }
+
+    path "sys/policy"
+    {
+      capabilities = ["read"]
+    }
+
+    path "sys/policy/*"
+    {
+      capabilities = ["create", "read", "update", "delete", "list"]
+    }
+
+    path "secret/*"
+    {
+      capabilities = ["create", "read", "update", "delete", "list"]
+    }
+
+
+{{- end }}

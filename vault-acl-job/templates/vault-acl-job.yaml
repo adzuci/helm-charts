@@ -1,0 +1,60 @@
+{{- if .Values.acl_job.enabled }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.acl_job.role }}
+  namespace: {{ .Values.vault.namespace }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.acl_job.role }}
+  namespace: {{ .Values.vault.namespace }}
+spec:
+  template:
+    spec:
+      volumes:
+        - name: {{ .Values.acl_job.role }}-cm
+          configMap:
+            name: {{ .Values.acl_job.role }}-cm
+            defaultMode: 0550
+        - name: vault-auth
+          emptyDir:
+            medium: Memory
+      initContainers:
+      - name: vault-wait
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nslookup {{ .Values.vault.service_account_name }}; do sleep 2; done;']
+
+      - name: vault-authenticator
+        image: edxops/vault-kubernetes-authenticator:latest
+        imagePullPolicy: Always
+        # command: [ "/bin/sh", "-c", "--" ]
+        # args: [ "while true; do echo \"ka thump\"; sleep 30; done;" ]
+        volumeMounts:
+        - name: vault-auth
+          mountPath: /var/run/secrets/vaultproject.io
+        env:
+        - name: VAULT_ROLE
+          value: {{ .Values.acl_job.role }}
+        - name: VAULT_ADDR
+          value: {{ .Values.vault.url }}
+        securityContext:
+          allowPrivilegeEscalation: false
+
+      containers:
+      - name: {{ .Values.acl_job.role }}
+        image: vault:latest
+        command: [ "/bin/sh", "-c", "--" ]
+        args: [ "/{{ .Values.acl_job.role }}-cm/start.sh" ]
+        # args: [ "while true; do echo \"ka thump\"; sleep 30; done;" ]
+        volumeMounts:
+        - name: {{ .Values.acl_job.role }}-cm
+          mountPath: /{{ .Values.acl_job.role }}-cm
+        - name: vault-auth
+          mountPath: /home/vault
+      restartPolicy: OnFailure
+      serviceAccount: {{ .Values.acl_job.role }}
+  backoffLimit: 4
+{{- end }}
