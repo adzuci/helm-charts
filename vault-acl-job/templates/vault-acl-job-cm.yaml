@@ -8,6 +8,8 @@ metadata:
 data:
   start.sh: |
     #!/bin/sh
+    set -e pipefail
+    
     cd /home/vault
     export VAULT_ADDR={{ .Values.vault.url }}
     export HOME=/home/vault
@@ -16,7 +18,7 @@ data:
       vault secrets enable -path=kv kv-v2
     fi
 
-    vault policy write newrelic-policy /vault-acl-job/newrelic.hcl
+    vault policy write newrelic-policy /vault-acl-job-cm/newrelic.hcl
     vault write auth/kubernetes/role/newrelic bound_service_account_names=newrelic bound_service_account_namespaces=newrelic policies=newrelic-policy ttl=1h
 
   newrelic.hcl: |
