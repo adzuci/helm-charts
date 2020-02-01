@@ -11,6 +11,8 @@ kind: Job
 metadata:
   name: {{ .Values.acl_job.role }}
   namespace: {{ .Values.vault.namespace }}
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/vault-acl-job-cm.yaml") . | sha256sum }}
 spec:
   template:
     spec:
