@@ -1,0 +1,96 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+  labels:
+{{ include "notes.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.app.name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.app.name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.app.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      # Create a volume with the application secrets
+      volumes:
+        - name: {{ include "notes.applicationSecretName" . }}
+          secret:
+            secretName: {{ include "notes.applicationSecretName" . }}
+      containers:
+        - name: {{ .Values.app.name }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8120
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /heartbeat
+              port: http
+          env:
+            {{ if .Values.newrelic.enabled }}
+            - name: "NEW_RELIC_APP_NAME"
+              value: {{ .Values.newrelic.appName }}
+            - name: "NEW_RELIC_LICENSE_KEY"
+              value: {{ .Values.newrelic.licenceKey }}
+            - name: "NEW_RELIC_LOG_LEVEL"
+              value: {{ .Values.newrelic.logLevel }}
+            - name: "NEW_RELIC_LOG"
+              value: "stdout"
+            {{- end }}
+
+          # Expose application secret contents as a volume in /edx/etc
+          volumeMounts:
+            - mountPath: "/edx/etc"
+              name: {{ include "notes.applicationSecretName" . }}
+              readOnly: true
+          resources:
+            {{- toYaml .Values.app.resources | nindent 14 }}
+      initContainers:
+        - name: wait-for-mysql-dns
+          image: busybox:1.31.0
+          command: ['sh', '-c', 'until nslookup {{ .Values.app.config.DATABASES.default.HOST }}; do echo waiting for {{ .Values.app.config.DATABASES.default.HOST }}; sleep 2; done;']
+        - name: wait-for-elasticsearch-dns
+          image: busybox:1.31.0
+          command: ['sh', '-c', 'until nslookup $(echo {{ .Values.app.config.ELASTICSEARCH_URL }} | cut -d "/" -f 3 | cut -d ":" -f1); do sleep 2; done;']
+        {{ if .Values.migrations.enabled }}
+        - name: wait-for-migrations-to-run
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          command: ['sh', '-c', 'python3 manage.py showmigrations | grep -v "\[ \]"']
+          volumeMounts:
+            - mountPath: "/edx/etc"
+              name: {{ include "notes.applicationSecretName" . }}
+              readOnly: true
+          resources:
+            {{- toYaml .Values.app.resources | nindent 16 }}
+        {{- end }} # Values.migrations.enabled
+        {{- if .Values.app.extraInitContainers }}
+        {{ tpl (toYaml .Values.app.extraInitContainers) . | nindent 6 }}
+        {{- end }} # Values.app.extraInitContainers
+      {{- with .Values.app.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.app.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.app.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
