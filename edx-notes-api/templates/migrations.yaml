@@ -25,7 +25,6 @@ spec:
         - name: {{ .Values.migrations.migrationContainerName }}
           image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
           command: ["python3", "manage.py", "migrate"]
-          restartPolicy: Never
           volumeMounts:
             - mountPath: "/edx/etc"
               name: {{ include "notes.applicationSecretName" . }}
