@@ -1,0 +1,39 @@
+{{- range $index, $ingress := .Values.ingresses }}
+{{- with $ }}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: {{ $ingress.class }}
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  {{ if $ingress.allow_django_admin }}
+  {{ else}}
+    nginx.ingress.kubernetes.io/configuration-snippet: |-
+      server_tokens off;
+      location /admin {
+        deny all;
+        return 403;
+      }
+  {{ end }}
+  labels:
+    app.kubernetes.io/instance: {{ $.Values.app.name }}
+    app.kubernetes.io/name: {{ $.Values.app.name }}
+  name: {{ $.Values.app.name }}-{{ $.Values.app.name }}
+spec:
+  rules:
+  - host: {{ $ingress.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ $.Values.app.name }}
+          servicePort: http
+        path: /
+  tls:
+  - hosts:
+    - {{ $ingress.host }}
+    secretName: {{ $.Values.app.name }}-tls-{{ $index }}
+{{- end }}
+{{- end }}
