@@ -45,6 +45,10 @@ spec:
               name: app-cm
         - name: NEW_RELIC_LICENSE_KEY
           value: Secret value filled in from secrets.env
+        {{- range $env := .Values.app.extraEnvs }}
+        - name: {{ $env.name }}
+          value: {{ $env.value }}
+        {{- end }}
         image: {{  .Values.app.image.repository }}/{{  .Values.app.image.tag }}
         imagePullPolicy: IfNotPresent
         name: {{ $worker.name }}

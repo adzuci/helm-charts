@@ -106,6 +106,10 @@ spec:
               name: app-cm
         - name: NEW_RELIC_LICENSE_KEY
           value: Secret value filled in from secrets.env
+        {{- range $env := .Values.app.extraEnvs }}
+        - name: {{ $env.name }}
+          value: {{ $env.value }}
+        {{- end }}
         image: {{  .Values.app.image.repository }}/{{  .Values.app.image.tag }}
         imagePullPolicy: IfNotPresent
         name: run-collectstatic
@@ -149,6 +153,10 @@ spec:
             configMapKeyRef:
               key: S3_ASSET_BUCKET
               name: app-cm
+        {{- range $env := .Values.app.extraEnvs }}
+        - name: {{ $env.name }}
+          value: {{ $env.value }}
+        {{- end }}
         image: edxops/k8s-cli-utils:af4b644c23d5b89bbb6abe4cbfd7f7a4b21371a3
         imagePullPolicy: IfNotPresent
         name: s3-upload

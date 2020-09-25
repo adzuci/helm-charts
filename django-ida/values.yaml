@@ -9,6 +9,9 @@ app:
     secret_file_env_name: MY_APP_CFG
     secret_file_name: my_app.yml
     service_account_name: my-app
+    extraEnvs: []
+        # - name: MY_ENV
+        #   value: myvalue
     migrations:
         name: my-app-migrations
         enabled: true
