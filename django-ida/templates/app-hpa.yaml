@@ -10,8 +10,8 @@ metadata:
     app.kubernetes.io/name: {{ .Values.app.name }}
   name: {{ .Values.app.name }}
 spec:
-  maxReplicas: {{ .Values.app.autoscaling.minReplicas }}
-  minReplicas: {{ .Values.app.autoscaling.maxReplicas }}
+  minReplicas: {{ .Values.app.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.app.autoscaling.maxReplicas }}
   scaleTargetRef:
     apiVersion: apps/v1beta1
     kind: Deployment
