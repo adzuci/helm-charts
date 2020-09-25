@@ -1,4 +1,6 @@
 
+v0.0.3 Allow applications to not specify a role_arn. Removed fake role ARN from service accounts by default.
+
 v0.0.2 Added support for arbitrary application environment variables that get passed into all containers running the application image
 to support applications that have non standard ENV setups.  
 

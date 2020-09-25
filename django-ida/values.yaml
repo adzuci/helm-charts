@@ -4,7 +4,7 @@ app:
     image:
         tag: 133d963baf5daa915f47a2143c4d076a92302e99-newrelic
         repository: openedx/my-app
-    role_arn: arn:aws:iam::77777777:role/prod-my-app
+    role_arn: '' #arn:aws:iam::77777777:role/prod-my-app
     command: 'gunicorn --workers=2 --name my_app -c /edx/app/my_app/my_app/docker_gunicorn_configuration.py --log-file - --max-requests=1000 my_app.wsgi:application'
     secret_file_env_name: MY_APP_CFG
     secret_file_name: my_app.yml
