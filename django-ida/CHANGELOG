@@ -1,3 +1,5 @@
+v0.1.1 Fixed bug where image:tag pairings were not valid
+
 v0.1.0 Added overridable issuer for ingresses for the cert issuer.
 You will need to add an 'issuer' to each ingress using this version.
 

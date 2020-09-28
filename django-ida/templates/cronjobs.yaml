@@ -39,7 +39,7 @@ spec:
             - name: {{ $env.name }}
               value: {{ $env.value }}
             {{- end }}
-            image: {{  .Values.app.image.repository }}/{{  .Values.app.image.tag }}
+            image: {{  .Values.app.image.repository }}:{{  .Values.app.image.tag }}
             imagePullPolicy: IfNotPresent
             name: {{ $job.name }}
             resources:
@@ -123,7 +123,7 @@ spec:
             - name: {{ $env.name }}
               value: {{ $env.value }}
             {{- end }}
-            image: {{  .Values.app.image.repository }}/{{  .Values.app.image.tag }}
+            image: {{  .Values.app.image.repository }}:{{  .Values.app.image.tag }}
             name: {{ .Values.app.migrations.name }}
             resources:
               limits:
