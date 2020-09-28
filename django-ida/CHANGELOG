@@ -1,3 +1,9 @@
+0.3.0
+Change defaults for the following variables as it was discovered
+that the apps are mostly consistent, it is vault that is inconsistent.
+        app.migrations.migrate_db_user_env_name: DB_MIGRATION_USER
+        app.migrations.migrate_db_pass_env_name: DB_MIGRATION_PASS
+
 0.2.2
 Fix secret render indentation to fit configmap
 
