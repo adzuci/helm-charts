@@ -7,7 +7,7 @@ metadata:
 apiVersion: v1
 data:
   {{ if .Values.app.migrations.enabled }}
-  DATABASE_MIGRATE_USER: {{ .Values.app.migrations.database_migrate_user }}
+  {{ .Values.app.migrations.migrate_db_user_env_name }}: {{ .Values.app.migrations.database_migrate_user }}
   {{ end }}
   NEW_RELIC_APP_NAME: {{ .Values.newrelic.app_name }}
   NEW_RELIC_LOG_LEVEL: {{ .Values.newrelic.log_level }}
@@ -22,7 +22,7 @@ data:
   migrate.env: |+
     #!/bin/bash
     {{"{{"}} with secret "{{ .Values.vault.secret_name }}?version={{ .Values.vault.secret_version }}" {{"}}"}}
-    export DB_MIGRATION_PASS={{"{{"}} .Data.data.DB_MIGRATION_PASS {{"}}"}}
+    export {{ .Values.app.migrations.migrate_db_pass_env_name }}={{"{{"}} .Data.data.{{ .Values.app.migrations.migrate_db_pass_env_name }} {{"}}"}}
     {{"{{"}} end {{"}}"}}
 
   secret.env: |

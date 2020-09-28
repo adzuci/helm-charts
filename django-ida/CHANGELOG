@@ -1,13 +1,29 @@
-v0.1.1 Fixed bug where image:tag pairings were not valid
+v0.2.0
+Added the following values to allow user to overwrite migration env names,
+since they differ between applications.  The following defaults were assigned:
 
-v0.1.0 Added overridable issuer for ingresses for the cert issuer.
+        app.migrations.migrate_db_user_env_name: DATABASE_MIGRATE_USER
+        app.migrations.migrate_db_pass_env_name: DATABASE_MIGRATE_PASS
+
+This is a breaking change since the default migrate_db_pass_env_name was
+previously: DB_MIGRATION_PASS
+
+v0.1.1
+Fixed bug where image:tag pairings were not valid
+
+v0.1.0
+Added overridable issuer for ingresses for the cert issuer.
 You will need to add an 'issuer' to each ingress using this version.
 
-v0.0.4 Fix bug that resulted in an impossible autoscaling configuration min > max
+v0.0.4
+Fix bug that resulted in an impossible autoscaling configuration min > max
 
-v0.0.3 Allow applications to not specify a role_arn. Removed fake role ARN from service accounts by default.
+v0.0.3
+Allow applications to not specify a role_arn. Removed fake role ARN from service accounts by default.
 
-v0.0.2 Added support for arbitrary application environment variables that get passed into all containers running the application image
+v0.0.2
+Added support for arbitrary application environment variables that get passed into all containers running the application image
 to support applications that have non standard ENV setups.  
 
-v0.0.1 Initial commit
+v0.0.1
+Initial commit

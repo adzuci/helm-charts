@@ -114,10 +114,10 @@ spec:
             - name: DB_MIGRATION_USER
               valueFrom:
                 configMapKeyRef:
-                  key: DATABASE_MIGRATE_USER
+                  key: {{ .Values.app.migrations.migrate_db_user_env_name }}
                   name: app-cm
                   optional: true
-            - name: DB_MIGRATION_PASS
+            - name: {{ .Values.app.migrations.migrate_db_pass_env_name }}
               value: Secret value filled in from migrate.env
             {{- range $env := .Values.app.extraEnvs }}
             - name: {{ $env.name }}
