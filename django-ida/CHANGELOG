@@ -3,7 +3,7 @@ Added the following values to allow user to overwrite migration env names,
 since they differ between applications.  The following defaults were assigned:
 
         app.migrations.migrate_db_user_env_name: DATABASE_MIGRATE_USER
-        app.migrations.migrate_db_pass_env_name: DATABASE_MIGRATE_PASS
+        app.migrations.migrate_db_pass_env_name: DATABASE_MIGRATE_PASSWORD
 
 This is a breaking change since the default migrate_db_pass_env_name was
 previously: DB_MIGRATION_PASS

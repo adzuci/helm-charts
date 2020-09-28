@@ -17,7 +17,7 @@ app:
         enabled: true
         database_migrate_user: migrate001
         migrate_db_user_env_name: DATABASE_MIGRATE_USER
-        migrate_db_pass_env_name: DATABASE_MIGRATE_PASS
+        migrate_db_pass_env_name: DATABASE_MIGRATE_PASSWORD
 
     autoscaling:
         enabled: true
