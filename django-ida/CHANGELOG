@@ -1,3 +1,6 @@
+0.2.1
+Render config as Yaml instead of as a serialized map
+
 v0.2.0
 Added the following values to allow user to overwrite migration env names,
 since they differ between applications.  The following defaults were assigned:
