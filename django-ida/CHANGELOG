@@ -1,3 +1,8 @@
+
+0.3.1
+Added ability to override the app.port, default is backwards compatible
+        app.port: 18170
+
 0.3.0
 Change defaults for the following variables as it was discovered
 that the apps are mostly consistent, it is vault that is inconsistent.
