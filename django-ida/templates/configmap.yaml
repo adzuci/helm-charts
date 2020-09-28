@@ -17,7 +17,7 @@ data:
   {{ .Values.app.secret_file_name }}: |
     ---
     {{"{{"}} with secret "{{ .Values.vault.secret_name }}?version={{ .Values.vault.secret_version }}" {{"}}"}}
-    {{ toYaml .Values.app.config }}
+{{ toYaml .Values.app.config | indent 4}}
     {{"{{"}} end {{"}}"}}
   migrate.env: |+
     #!/bin/bash
