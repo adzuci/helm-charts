@@ -25,6 +25,9 @@ app:
         maxReplicas: 10
         targetCPUUtilizationPercentage: 50
 
+    health_check: 
+        endpoint: "/health"
+        
     config: {} # Your yaml config goes here
 
 

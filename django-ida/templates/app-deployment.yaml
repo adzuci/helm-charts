@@ -49,10 +49,10 @@ spec:
         image: {{  .Values.app.image.repository }}:{{  .Values.app.image.tag }}
         imagePullPolicy: IfNotPresent
         livenessProbe:
-          httpGet:
-            path: /health
-            port: http
-          timeoutSeconds: 3
+          exec:
+            command:
+            - ls
+          periodSeconds: 5
         name: {{ .Values.app.name }}
         ports:
         - containerPort: {{ .Values.app.port }}
@@ -60,7 +60,7 @@ spec:
           protocol: TCP
         readinessProbe:
           httpGet:
-            path: /health
+            path: {{ .Values.app.health_check.endpoint }}
             port: http
           timeoutSeconds: 3
         resources:

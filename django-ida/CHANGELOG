@@ -1,3 +1,9 @@
+0.3.2
+Added parameter to allow the customization of the healthcheck endpoint with
+/health as the default value.
+health_check.endpoint: "/health"
+
+Added a liveness check that is different from the readiness check.
 
 0.3.1
 Added ability to override the app.port, default is backwards compatible
