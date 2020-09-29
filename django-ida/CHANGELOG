@@ -1,3 +1,6 @@
+0.3.3
+Ingresses now have a generated number after them to prevent names colliding
+
 0.3.2
 Added parameter to allow the customization of the healthcheck endpoint with
 /health as the default value.
