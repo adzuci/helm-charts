@@ -157,7 +157,7 @@ spec:
         - name: {{ $env.name }}
           value: {{ $env.value }}
         {{- end }}
-        image: edxops/k8s-cli-utils:af4b644c23d5b89bbb6abe4cbfd7f7a4b21371a3
+        image: edxops/k8s-cli-utils:f0c63ac1cb531f8e151a9ef74a5d13b85b6db75b
         imagePullPolicy: IfNotPresent
         name: s3-upload
         volumeMounts:
