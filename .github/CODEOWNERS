@@ -1,0 +1,6 @@
+# Docs for the format of this file: https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners#codeowners-syntax
+
+# Line order is important; the last matching pattern takes the most
+# precedence. These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence.
+* @edx/site-reliability-engineering @edx/embedded-sres
