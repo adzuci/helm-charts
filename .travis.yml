@@ -8,13 +8,10 @@ env:
 install:
 - sudo apt-get update
 - sudo apt-get install -y yamllint
-- wget http://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz
+- wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz
   -O /tmp/helm.tar.gz
 - tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1
 - chmod +x /tmp/helm
-before_script:
-- "/tmp/helm init --client-only"
-- "/tmp/helm repo add elastic https://helm.elastic.co"
 script:
 - |
   for chart in $(find . -name 'Chart.yaml'); do
