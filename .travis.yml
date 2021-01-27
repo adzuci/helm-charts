@@ -3,7 +3,7 @@ dist: bionic
 sudo: false
 env:
   global:
-  - HELM_VERSION="v2.16.0"
+  - HELM_VERSION="v3.5.0"
   - secure: N+2ZErLjX0THd/fEH8CaZnKUWWOW+3pUgmN96hbIkAgno/nyJHwHMVc1b0cKhC5nTHu67dOcfQNdC+g7U/0mHPt+sp098ym2X7yQ0bkPgNyyz16ADuoAEvtN3G4ATTwIjqJ1QLHH55fJ4IXKjCwKMEMYCPXMjMEvigBZa/g2x1M5Q2fetXhtGWb/V5sibr/pz9HKRDdAgRDhKsstiCyi1LjAq+hFgItKevDs7UZjYkkpombkyFacYOgwmQh4eqEONrLDDtZcExrLSj/0kooOg1Ja50SnfTDyJMnVvci+dFo9xeimll1yMHm5aXCFXuC6JRSKKm7xNYqAdudo6GMOz9n/BgSk6qMttTcsmVAl4F3Q31/zud5vmlFvVp4Q/h1j6cnUZNTV8J34o9tgbII5rqxNY9blscxiiDKA/txSWN6IOBVnOdKj1jHaT7T5D7jCzNt8q/k3sCwk4eUzq0/jRIEeB/TtjPcbp86DwDPqpfGVxNpUekQhmFzG22dbctYtJBmbQ0uONF9TIxt40xTCrtcwu1yAGmZ+AJNXfvAsJr0O6a2cm3gsLyuBIsVkk/pOvn+FG3Rde5nu7CZDDOv6C2C5M18SAG9fm07zMG5+jBHb8fMCd5SJMecI/hnOtjn0IaJMJoZrgyYSQoUvtbX1QZ5ssvyGNo4goqVnoQxpFAQ=
 install:
 - sudo apt-get update
