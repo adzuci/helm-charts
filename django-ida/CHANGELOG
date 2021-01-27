@@ -1,5 +1,6 @@
 0.3.6
 New version of k8s-cli-util
+Move from the older stable url to the newer one for the dev mysql deployment
 
 0.3.5
 New version of k8s-cli-util
