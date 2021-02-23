@@ -28,9 +28,20 @@ data:
   secret.env: |
     #!/bin/bash
     export NEW_RELIC_LICENSE_KEY={{"{{"}} with secret "{{ .Values.vault.secret_name }}?version={{ .Values.vault.secret_version }}" {{"}}"}}{{"{{"}} .Data.data.NEW_RELIC_LICENSE_KEY {{"}}"}}{{"{{"}} end {{"}}"}}
-  
+{{ if .Values.vault.use_tls }}
   vault.hcl: |
     "vault" = {
       "vault_agent_token_file" = "/vault-auth-secrets/secrets/.vault-token"
-      "renew_token" = false
+        ssl {
+          enabled = true
+          verify = true
+          ca_cert = "/etc/ssl/cert.pem"
+        }
     }
+{{ else }}
+  vault.hcl: |
+    "vault" = {
+      "vault_agent_token_file" = "/vault-auth-secrets/secrets/.vault-token"
+    }
+{{ end }}
+
