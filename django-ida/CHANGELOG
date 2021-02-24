@@ -1,3 +1,6 @@
+0.3.8
+Default vault url updated to https://vault.prod.edx.org
+
 0.3.7
 Enabled tls by default for django-ida helm chart
 added flag vault.use_tls to disable this behaviour.

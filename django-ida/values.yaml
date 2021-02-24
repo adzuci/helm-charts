@@ -50,7 +50,7 @@ vault:
     enabled: true
     use_tls: true
     vault_role: my-app
-    vault_addr: http://prod-vault.vault:8200
+    vault_addr: https://vault.prod.edx.org
     secret_name: kv/my-app
     secret_version: 1
 
