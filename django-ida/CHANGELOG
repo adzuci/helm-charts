@@ -1,3 +1,6 @@
+0.4.1
+Removing mysql and elasticsearch subcharts
+
 0.4.0
 Removing support for development_mysql and development_elasticsearch
 
