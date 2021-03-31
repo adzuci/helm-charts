@@ -1,3 +1,6 @@
+0.4.0
+Removing support for development_mysql and development_elasticsearch
+
 0.3.8
 Default vault url updated to https://vault.prod.edx.org
 
