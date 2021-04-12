@@ -82,7 +82,6 @@ spec:
               set -xe
               /bin/consul-template -config /app-cm/vault.hcl -template "/app-cm/{{ .Values.app.secret_file_name }}:/vault-api-secrets/secrets/{{ .Values.app.secret_file_name }}" -once
               /bin/consul-template -config /app-cm/vault.hcl -template "/app-cm/secret.env:/vault-api-secrets/secrets/secret.env" -once
-              /bin/consul-template -config /app-cm/vault.hcl -template "/app-cm/migrate.env:/vault-migrate-secrets/secrets/migrate.env" -once
             env:
             - name: VAULT_ADDR
               valueFrom:
@@ -98,47 +97,8 @@ spec:
               readOnly: true
             - mountPath: /vault-api-secrets/secrets
               name: vault-api-secrets
-            - mountPath: /vault-migrate-secrets/secrets
-              name: vault-migrate-secrets
             - mountPath: /app-cm
               name: app-cm
-          - args:
-            - source /vault-migrate-secrets/secrets/migrate.env && exec python3 manage.py migrate
-            command:
-            - /bin/bash
-            - -c
-            - --
-            env:
-            - name: {{  .Values.app.secret_file_env_name }}
-              value: /vault-api-secrets/secrets/{{ .Values.app.secret_file_name }}
-            - name: DB_MIGRATION_USER
-              valueFrom:
-                configMapKeyRef:
-                  key: {{ .Values.app.migrations.migrate_db_user_env_name }}
-                  name: app-cm
-                  optional: true
-            - name: {{ .Values.app.migrations.migrate_db_pass_env_name }}
-              value: Secret value filled in from migrate.env
-            {{- range $env := .Values.app.extraEnvs }}
-            - name: {{ $env.name }}
-              value: {{ $env.value }}
-            {{- end }}
-            image: {{  .Values.app.image.repository }}:{{  .Values.app.image.tag }}
-            name: {{ .Values.app.migrations.name }}
-            resources:
-              limits:
-                cpu: 100m
-                memory: 512Mi
-              requests:
-                cpu: 25m
-                memory: 512Mi
-            volumeMounts:
-            - mountPath: /vault-migrate-secrets/secrets
-              name: vault-migrate-secrets
-              readOnly: true
-            - mountPath: /vault-api-secrets/secrets
-              name: vault-api-secrets
-              readOnly: true
           restartPolicy: Never
           securityContext:
             fsGroup: 1000
@@ -152,9 +112,6 @@ spec:
           - emptyDir:
               medium: Memory
             name: vault-api-secrets
-          - emptyDir:
-              medium: Memory
-            name: vault-migrate-secrets
           - configMap:
               name: app-cm
             name: app-cm

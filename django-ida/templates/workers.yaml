@@ -92,7 +92,6 @@ spec:
           set -xe
           /bin/consul-template -config /app-cm/vault.hcl -template "/app-cm/{{ .Values.app.secret_file_name }}:/vault-api-secrets/secrets/{{ .Values.app.secret_file_name }}" -once
           /bin/consul-template -config /app-cm/vault.hcl -template "/app-cm/secret.env:/vault-api-secrets/secrets/secret.env" -once
-          /bin/consul-template -config /app-cm/vault.hcl -template "/app-cm/migrate.env:/vault-migrate-secrets/secrets/migrate.env" -once
         env:
         - name: VAULT_ADDR
           valueFrom:
@@ -108,8 +107,6 @@ spec:
           readOnly: true
         - mountPath: /vault-api-secrets/secrets
           name: vault-api-secrets
-        - mountPath: /vault-migrate-secrets/secrets
-          name: vault-migrate-secrets
         - mountPath: /app-cm
           name: app-cm
       securityContext:
@@ -124,9 +121,6 @@ spec:
       - emptyDir:
           medium: Memory
         name: vault-api-secrets
-      - emptyDir:
-          medium: Memory
-        name: vault-migrate-secrets
       - configMap:
           name: app-cm
         name: app-cm

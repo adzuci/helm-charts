@@ -1,3 +1,8 @@
+0.5.0
+Removeing migrations from cronjobs and workers since this makes the db state harder to reason about.  
+Migrations will only be run when the application image is deployed.  Remove migration secrets from cronjobs and workers since they
+are no longer needed.
+
 0.4.1
 Removing mysql and elasticsearch subcharts
 
