@@ -1,3 +1,6 @@
+0.5.1
+Adding option to specify initialDelaySeconds for readiness and liveness probes.
+
 0.5.0
 Removeing migrations from cronjobs and workers since this makes the db state harder to reason about.  
 Migrations will only be run when the application image is deployed.  Remove migration secrets from cronjobs and workers since they

@@ -49,6 +49,7 @@ spec:
         image: {{  .Values.app.image.repository }}:{{  .Values.app.image.tag }}
         imagePullPolicy: IfNotPresent
         livenessProbe:
+          initialDelaySeconds: {{ .Values.app.health_check.liveness_probe_initial_delay_seconds}}
           exec:
             command:
             - ls
@@ -59,6 +60,7 @@ spec:
           name: http
           protocol: TCP
         readinessProbe:
+          initialDelaySeconds: {{ .Values.app.health_check.readiness_probe_initial_delay_seconds}}
           httpGet:
             path: {{ .Values.app.health_check.endpoint }}
             port: http
