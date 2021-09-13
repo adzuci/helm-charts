@@ -1,3 +1,6 @@
+0.5.2
+Adding option to specify resources for POD.
+
 0.5.1
 Adding option to specify initialDelaySeconds for readiness and liveness probes.
 

@@ -56,6 +56,14 @@ vault:
     secret_name: kv/my-app
     secret_version: 1
 
+resources:
+  limits:
+    cpu: 100m
+    memory: 512Mi
+  requests:
+    cpu: 25m
+    memory: 512Mi
+
 ingresses: []
     # - host: my-app.edx.org
     #   class: public
