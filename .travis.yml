@@ -4,12 +4,11 @@ sudo: false
 env:
   global:
   - HELM_VERSION="v3.5.0"
-  - secure: N+2ZErLjX0THd/fEH8CaZnKUWWOW+3pUgmN96hbIkAgno/nyJHwHMVc1b0cKhC5nTHu67dOcfQNdC+g7U/0mHPt+sp098ym2X7yQ0bkPgNyyz16ADuoAEvtN3G4ATTwIjqJ1QLHH55fJ4IXKjCwKMEMYCPXMjMEvigBZa/g2x1M5Q2fetXhtGWb/V5sibr/pz9HKRDdAgRDhKsstiCyi1LjAq+hFgItKevDs7UZjYkkpombkyFacYOgwmQh4eqEONrLDDtZcExrLSj/0kooOg1Ja50SnfTDyJMnVvci+dFo9xeimll1yMHm5aXCFXuC6JRSKKm7xNYqAdudo6GMOz9n/BgSk6qMttTcsmVAl4F3Q31/zud5vmlFvVp4Q/h1j6cnUZNTV8J34o9tgbII5rqxNY9blscxiiDKA/txSWN6IOBVnOdKj1jHaT7T5D7jCzNt8q/k3sCwk4eUzq0/jRIEeB/TtjPcbp86DwDPqpfGVxNpUekQhmFzG22dbctYtJBmbQ0uONF9TIxt40xTCrtcwu1yAGmZ+AJNXfvAsJr0O6a2cm3gsLyuBIsVkk/pOvn+FG3Rde5nu7CZDDOv6C2C5M18SAG9fm07zMG5+jBHb8fMCd5SJMecI/hnOtjn0IaJMJoZrgyYSQoUvtbX1QZ5ssvyGNo4goqVnoQxpFAQ=
+  - secure: L6DH9/gZFYtcYm2NFNB0LXI9WzA6yrsjZNBGha/YtKjiiRd44+LiwkeP4tWp9Ytc0NA+hTSgmZ4pGbu7LbiD3HxosnGfGYe6vIfO3LkpMWomvUvcHovv1xFp98n09jA/XyJWS9IngV/1VU/o8fQELjZYjJNC0QlYW3x20AuhKqGXv9g8Hjcmng9/EgfvDzJdxUg9+WoXpaQJ0kc5bmbIy30MDkp4edYRCzGXsK01AZjYz/YLCeQo6AX7NQGcH1L/bf1HuMsVs5ojSxcsXFQkb6hOzK8KRnorgI0snYrBDH92NAWrfvgZ1rkReLnikyZ9wp6JcHhbmnV8mUUuPOoCoPy3MZJMiLUHTO2mHCM28VCvD3JbOiUbbJV0VU/XEi2UBkZEsIAoGr1LLzgYtJ720M4UDjxDRQo/AvzJc+dU9SljjfnojmaunXpxXBP1WnCZyhjc2yTzeaDLP4nNYvoQnrVjb9He+fyDqW0t1tWFGJmfKR1gL/yjKSXqj8AaVeSJpaJKP6kuuQ7HAaFrmxIp3Alt0f6IZ9FVMXTmCu3HtSIC4s9v0Er0Hn3bx+3d2bsCVbDLqncIjfZt1yAqH8sUfWn7D4p5fTNy7ME0gIqxUZgryEch29I1ak31PPaWqDrOvMQPPgqMY4P0BC787SmRksNylJZzsXNJMC5Api+VkJc=
 install:
 - sudo apt-get update
 - sudo apt-get install -y yamllint
-- wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz
-  -O /tmp/helm.tar.gz
+- wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -O /tmp/helm.tar.gz
 - tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1
 - chmod +x /tmp/helm
 script:
