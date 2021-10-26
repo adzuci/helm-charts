@@ -1,0 +1,42 @@
+name: CI / YAML Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  push:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Helm
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y yamllint
+          wget https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -O /tmp/helm.tar.gz
+          tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1
+          chmod +x /tmp/helm
+        env:
+          HELM_VERSION: v3.5.0
+
+      - name: Run tests
+        run: |
+          for chart in $(find . -name 'Chart.yaml'); do
+            echo "=========== Begin $(dirname ${chart}) ==========="
+
+            set -x
+            /tmp/helm dep build $(dirname ${chart})
+            /tmp/helm lint $(dirname ${chart})
+            template=$(/tmp/helm template $(dirname ${chart}))
+            set +x
+
+            # See if the output is valid yaml
+            echo $template | yamllint -d relaxed /dev/stdin
+
+            echo "=========== End $(dirname ${chart}) ==========="
+          done
