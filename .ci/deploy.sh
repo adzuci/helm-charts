@@ -7,6 +7,8 @@ for chart in $(find ../helm-charts/ -name 'Chart.yaml'); do
   /tmp/helm package $(dirname ${chart})
 done
 /tmp/helm repo index .
+git config --global user.email "admin@edx.org"
+git config --global user.name "Helm Build automation"
 git add .
-git commit -a -m "$TRAVIS_COMMIT_MESSAGE" --author "Helm Build automation <admin@edx.org>"
+git commit -a -m "$COMMIT_MESSAGE"
 git push

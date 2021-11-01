@@ -1,4 +1,4 @@
-name: CI / YAML Lint
+name: YAML Lint / Deploy
 
 on:
   push:
@@ -40,3 +40,10 @@ jobs:
 
             echo "=========== End $(dirname ${chart}) ==========="
           done
+
+      - name: Deploy Changes
+        if: ${{ github.event_name == 'push' }}
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.EDX_DEPLOYMENT_GH_TOKEN }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: bash .ci/deploy.sh
