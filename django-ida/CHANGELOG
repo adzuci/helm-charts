@@ -1,3 +1,6 @@
+0.5.5
+Only create app HPA resource if app is enabled
+
 0.5.4
 Add option to toggle off app deployment (default set to True)
 
