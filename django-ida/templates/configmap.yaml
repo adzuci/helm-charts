@@ -22,7 +22,7 @@ data:
   migrate.env: |+
     #!/bin/bash
     {{"{{"}} with secret "{{ .Values.vault.secret_name }}?version={{ .Values.vault.secret_version }}" {{"}}"}}
-    export {{ .Values.app.migrations.migrate_db_pass_env_name }}={{"{{"}} .Data.data.{{ .Values.app.migrations.migrate_db_pass_env_name }} {{"}}"}}
+    export {{ .Values.app.migrations.migrate_db_pass_env_name }}={{"$'{{"}} .Data.data.{{ .Values.app.migrations.migrate_db_pass_env_name }} | replaceAll "\\" "\\\\" | replaceAll "'" "\\'" {{"}}'"}}
     {{"{{"}} end {{"}}"}}
 
   secret.env: |

@@ -1,3 +1,6 @@
+0.5.6
+Add support for DB_MIGRATION_PASS with Bash special characters
+
 0.5.5
 Only create app HPA resource if app is enabled
 
