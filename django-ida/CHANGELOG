@@ -1,3 +1,6 @@
+0.5.7
+Add health_check.host_header to customize livenessProbe HTTP Host header
+
 0.5.6
 Add support for DB_MIGRATION_PASS with Bash special characters
 

@@ -63,6 +63,9 @@ spec:
         readinessProbe:
           initialDelaySeconds: {{ .Values.app.health_check.readiness_probe_initial_delay_seconds}}
           httpGet:
+            httpHeaders:
+                - name: Host
+                  value: {{ .Values.app.health_check.host_header }}
             path: {{ .Values.app.health_check.endpoint }}
             port: http
           timeoutSeconds: 3

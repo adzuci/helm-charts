@@ -28,6 +28,7 @@ app:
 
     health_check: 
         endpoint: "/health"
+        host_header: "localhost"
         liveness_probe_initial_delay_seconds: 0
         readiness_probe_initial_delay_seconds: 0
         
