@@ -6,4 +6,4 @@
 
 * [ ] Bump version in Chart.yaml
 * [ ] Update CHANGELOG
-* [ ] Submit devops-app-creator PR to bump version in devops_app_creator/templates/helm_manifests/chart_yaml.py
+* [ ] Submit bootstrap-k8s-app PR to bump version in bootstrap-k8s-app/templates/helm_manifests/chart_yaml.py
