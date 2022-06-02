@@ -1,3 +1,6 @@
+0.5.8
+Add custom annotation for external dns
+
 0.5.7
 Add health_check.host_header to customize livenessProbe HTTP Host header
 
