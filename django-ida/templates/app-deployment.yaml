@@ -48,7 +48,7 @@ spec:
           value: {{ $env.value }}
         {{- end }}
         image: {{  .Values.app.image.repository }}:{{  .Values.app.image.tag }}
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           initialDelaySeconds: {{ .Values.app.health_check.liveness_probe_initial_delay_seconds}}
           exec:
