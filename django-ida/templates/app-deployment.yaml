@@ -102,6 +102,13 @@ spec:
         volumeMounts:
         - mountPath: /vault-auth-secrets/secrets
           name: vault-auth-secrets
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "48Mi"
+          limits:
+            cpu: "100m"
+            memory: "64Mi"
       - command:
         - /bin/sh
         - -c
@@ -129,6 +136,13 @@ spec:
           name: vault-migrate-secrets
         - mountPath: /app-cm
           name: app-cm
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "48Mi"
+          limits:
+            cpu: "100m"
+            memory: "64Mi"
       - args:
         - source /vault-migrate-secrets/secrets/migrate.env && exec python3 manage.py migrate
         command:
