@@ -96,7 +96,7 @@ spec:
           value: /vault-auth-secrets/secrets/.vault-token
         - name: ACCESSOR_DEST_PATH
           value: /vault-auth-secrets/secrets/.vault-accessor
-        image: edxops/vault-kubernetes-authenticator:latest
+        image: edxops/vault-kubernetes-authenticator:3b373bc86ade783492b6619552d2b172a6e12a8b
         imagePullPolicy: IfNotPresent
         name: vault-authenticator
         volumeMounts:
