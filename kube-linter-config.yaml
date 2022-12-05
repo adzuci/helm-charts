@@ -3,5 +3,4 @@ checks:
   exclude:
     - "unset-memory-requirements"
     - "unset-cpu-requirements"
-    - "latest-tag"
     - "no-read-only-root-fs"
