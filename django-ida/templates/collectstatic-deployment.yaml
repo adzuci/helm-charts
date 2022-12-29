@@ -86,7 +86,7 @@ spec:
         - mountPath: /app-cm
           name: app-cm
       - args:
-        - source /vault-api-secrets/secrets/secret.env && exec python manage.py collectstatic --noinput
+        - source /vault-api-secrets/secrets/secret.env && {{ .Values.collectstatic.command }}
         command:
         - /bin/bash
         - -c
