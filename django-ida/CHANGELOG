@@ -1,3 +1,6 @@
+0.6.1
+Adding option to specify command for collectstatic job
+
 0.6.0
 Changed imagePullPolicy to Always for app containers to fix issue with images not updating after rebuild. Currently
 image tags are not immutable, so we need to always check the Docker image repository for updates images.

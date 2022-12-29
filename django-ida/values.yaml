@@ -47,6 +47,7 @@ newrelic:
 collectstatic:
     enabled: false
     job_name: my-app-collectstatic
+    command: exec python manage.py collectstatic --noinput
     s3_bucket: s3://prod-my-app-assets
     asset_write_role: arn:aws:iam::77777777:role/prod-my-app-assets-rw
     
