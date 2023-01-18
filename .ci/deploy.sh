@@ -12,4 +12,3 @@ git config --global user.name "Helm Build automation"
 git add .
 git commit -a -m "$COMMIT_MESSAGE"
 git push
-
