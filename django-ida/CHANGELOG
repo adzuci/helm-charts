@@ -1,3 +1,6 @@
+0.6.2
+Add custom annotation to ingress object for external dns cloudflare
+
 0.6.1
 Adding option to specify command for collectstatic job
 
