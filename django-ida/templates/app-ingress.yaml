@@ -29,6 +29,7 @@ metadata:
     app.kubernetes.io/name: {{ $.Values.app.name }}
   name: {{ $.Values.app.name }}-{{ $.Values.app.name }}-{{ $index }}
 spec:
+  ingressClassName: {{ $ingress.class }}
   rules:
   - host: {{ $ingress.host }}
     http:
