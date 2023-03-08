@@ -11,21 +11,21 @@ metadata:
   {{- end }}
     kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-  {{ if $ingress.external_dns }}
+  {{- if $ingress.external_dns }}
     kubernetes.io/external-dns: "true"
-  {{ end }}
-  {{ if $ingress.external_dns_cloudflare }}
+  {{- end }}
+  {{- if $ingress.external_dns_cloudflare }}
     kubernetes.io/external-dns-cloudflare: "true"
-  {{ end }}
-  {{ if $ingress.allow_django_admin }}
-  {{ else }}
+  {{- end }}
+  {{- if $ingress.allow_django_admin }}
+  {{- else }}
     nginx.ingress.kubernetes.io/configuration-snippet: |-
       server_tokens off;
       location /admin {
         deny all;
         return 403;
       }
-  {{ end }}
+  {{- end }}
   labels:
     app.kubernetes.io/instance: {{ $.Values.app.name }}
     app.kubernetes.io/name: {{ $.Values.app.name }}
