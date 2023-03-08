@@ -6,7 +6,9 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: {{ $ingress.issuer }}
+  {{- if $ingress.class }}
     kubernetes.io/ingress.class: {{ $ingress.class }}
+  {{- end }}
     kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   {{ if $ingress.external_dns }}
@@ -16,7 +18,7 @@ metadata:
     kubernetes.io/external-dns-cloudflare: "true"
   {{ end }}
   {{ if $ingress.allow_django_admin }}
-  {{ else}}
+  {{ else }}
     nginx.ingress.kubernetes.io/configuration-snippet: |-
       server_tokens off;
       location /admin {
@@ -29,7 +31,9 @@ metadata:
     app.kubernetes.io/name: {{ $.Values.app.name }}
   name: {{ $.Values.app.name }}-{{ $.Values.app.name }}-{{ $index }}
 spec:
-  ingressClassName: {{ $ingress.class }}
+  {{- if $ingress.className }}
+  ingressClassName: {{ $ingress.className }}
+  {{- end }}
   rules:
   - host: {{ $ingress.host }}
     http:
