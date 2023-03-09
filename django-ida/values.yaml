@@ -69,10 +69,10 @@ resources:
 
 ingresses: []
     # - host: my-app.edx.org
-    #   class: public
+    #   className: public
 
     # - host: my-app-internal.edx.org
-    #   class: internal
+    #   className: internal
     #   allow_django_admin: true
 
 cronjobs: []

@@ -6,9 +6,9 @@ metadata:
   name: app-cm
 apiVersion: v1
 data:
-  {{ if .Values.app.migrations.enabled }}
+  {{- if .Values.app.migrations.enabled }}
   {{ .Values.app.migrations.migrate_db_user_env_name }}: {{ .Values.app.migrations.database_migrate_user }}
-  {{ end }}
+  {{- end }}
   NEW_RELIC_APP_NAME: {{ .Values.newrelic.app_name }}
   NEW_RELIC_LOG_LEVEL: {{ .Values.newrelic.log_level }}
   S3_ASSET_BUCKET: {{ .Values.collectstatic.s3_bucket }}
