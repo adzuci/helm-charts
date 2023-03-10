@@ -74,6 +74,8 @@ ingresses: []
     # - host: my-app-internal.edx.org
     #   className: internal
     #   allow_django_admin: true
+    #   extra_tls_hosts:
+    #     - my-app-internal-test.edx.org
 
 cronjobs: []
     # - name: my-app-retire-old-licenses
