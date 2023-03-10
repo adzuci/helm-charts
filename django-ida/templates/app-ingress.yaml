@@ -56,6 +56,11 @@ spec:
   tls:
   - hosts:
     - {{ $ingress.host }}
+  {{- if $ingress.extra_tls_hosts }}
+  {{- range $ingress.extra_tls_hosts }}
+    - {{ . }}
+  {{- end }}
+  {{- end }}
 {{- /*
 Append truncated sha256 of hostname in case we have mutliple ingresses of the same className
 Comment is above if because putting it below breaks helm templating
