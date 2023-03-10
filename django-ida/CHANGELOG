@@ -1,3 +1,11 @@
+0.7.2
+Add extra_tls_hosts variable to allow adding extra hostnames to TLS certs
+Make ingress and tls secret names stable on ingresses using the new className variable to prevent shuffling. 
+
+0.7.1
+Add new ingress class variable to fix issue with 0.7.0 that causes new ingresses to not be created, because kubernetes
+doesn't allow you to set the new className variable on the spec and the old annotation at the same time.
+
 0.7.0
 Add ingressClassName to ingress spec for compatibility with networking.k8s.io/v1 Ingress and Kubernetes 1.22
 
