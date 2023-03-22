@@ -1,3 +1,7 @@
+0.8.0
+Removed ingress class variable in favor of new className variable. The class variable is used to set the old annotation
+kubernetes.io/ingress.class which has been replaced by ingressClassName in the spec of the v1 of the ingress api
+
 0.7.2
 Add extra_tls_hosts variable to allow adding extra hostnames to TLS certs
 Make ingress and tls secret names stable on ingresses using the new className variable to prevent shuffling. 
