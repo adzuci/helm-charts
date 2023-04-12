@@ -1,3 +1,7 @@
+0.8.1
+Add option to configure the name of python (e.g. python, python3, python3.9) used to run command in migration init
+container. Defaults to python3.
+
 0.8.0
 Removed ingress class variable in favor of new className variable. The class variable is used to set the old annotation
 kubernetes.io/ingress.class which has been replaced by ingressClassName in the spec of the v1 of the ingress api

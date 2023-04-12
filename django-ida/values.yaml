@@ -19,6 +19,7 @@ app:
         database_migrate_user: migrate001
         migrate_db_user_env_name: DB_MIGRATION_USER
         migrate_db_pass_env_name: DB_MIGRATION_PASS
+        migration_python_version: python3
 
     autoscaling:
         enabled: true
