@@ -1,3 +1,6 @@
+0.8.2
+Updated the Cron job Api version to batch/v1. Previous api version was deprecated in k8s 1.21 and removed in 1.25.
+
 0.8.1
 Add option to configure the name of python (e.g. python, python3, python3.9) used to run command in migration init
 container. Defaults to python3.
