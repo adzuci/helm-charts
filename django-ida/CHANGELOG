@@ -1,3 +1,6 @@
+0.8.3
+Updated the Cron job template to support schedules that need to be quoted.
+
 0.8.2
 Updated the Cron job Api version to batch/v1. Previous api version was deprecated in k8s 1.21 and removed in 1.25.
 

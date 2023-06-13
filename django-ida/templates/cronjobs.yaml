@@ -8,7 +8,7 @@ metadata:
   name: {{ $job.name }}
 spec:
   concurrencyPolicy: Forbid
-  schedule: {{ $job.schedule }}
+  schedule: "{{ $job.schedule }}"
   jobTemplate:
     spec:
       template:
