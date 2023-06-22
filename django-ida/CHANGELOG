@@ -1,3 +1,6 @@
+0.8.5
+Fix YAML injection prevention; `quote` output's escaping is only compatible with YAML, not Bash strings
+
 0.8.4
 Prevented YAML injection in worker command
 
