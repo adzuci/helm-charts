@@ -25,7 +25,10 @@ spec:
     spec:
       containers:
       - args:
-        - source /vault-api-secrets/secrets/secret.env && exec {{ if $.Values.newrelic.enabled }}newrelic-admin run-program {{ end }}{{ $worker.command }}
+        - >-
+          source /vault-api-secrets/secrets/secret.env &&
+          exec {{ if $.Values.newrelic.enabled }}newrelic-admin run-program{{ end }}
+          bash -c {{ $worker.command | quote }}
         command:
         - /bin/bash
         - -c

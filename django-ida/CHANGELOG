@@ -1,3 +1,6 @@
+0.8.4
+Prevented YAML injection in worker command
+
 0.8.3
 Updated the Cron job template to support schedules that need to be quoted.
 
