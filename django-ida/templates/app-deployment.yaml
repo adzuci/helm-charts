@@ -6,9 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/instance: {{ .Values.app.name }}
     app.kubernetes.io/name: {{ .Values.app.name }}
-    {{- range $key, $val := .Values.app.additionalLabels }}
-    {{ $key }}: {{ $val }}
-    {{- end}}
   name: {{ .Values.app.name }}
   annotations:
     ignore-check.kube-linter.io/no-read-only-root-fs: "Temporarily ignore check no-read-only-root-fs until PSRE-2074 is resolved"
