@@ -23,6 +23,9 @@ spec:
       labels:
         app.kubernetes.io/instance: {{ .Values.app.name }}
         app.kubernetes.io/name: {{ .Values.app.name }}
+        {{- range $key, $val := .Values.app.additionalLabels }}
+        {{ $key }}: {{ $val }}
+        {{- end}}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
