@@ -8,6 +8,9 @@ metadata:
   labels:
     app.kubernetes.io/instance: {{ .Values.app.name }}
     app.kubernetes.io/name: {{ .Values.app.name }}
+    {{- range $key, $val := .Values.app.additionalLabels }}
+    {{ $key }}: {{ $val }}
+    {{- end}}
   name: {{ .Values.app.name }}
 spec:
   minReplicas: {{ .Values.app.autoscaling.minReplicas }}
