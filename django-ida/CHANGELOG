@@ -1,3 +1,6 @@
+0.8.7
+Added additionalLabels env, owner and team for kubecost aggregations using range
+
 0.8.6
 Increase memory limit for celery workers to fix discovery celery workers from crashing due to resource limits being exceeded
 
