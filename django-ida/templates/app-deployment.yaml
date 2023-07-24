@@ -193,6 +193,7 @@ spec:
         - mountPath: /vault-api-secrets/secrets
           name: vault-api-secrets
           readOnly: true
+      {{ end }}
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -211,6 +212,5 @@ spec:
       - configMap:
           name: app-cm
         name: app-cm
-      {{ end }}
 
 {{ end }}

@@ -1,3 +1,6 @@
+0.8.9
+Fix app deployment issue by adding the missing mounted volumes section when migrations are disabled
+
 0.8.8
 Proceed with running Django migrations only when it is enabled
 
