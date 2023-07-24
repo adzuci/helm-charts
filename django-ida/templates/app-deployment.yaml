@@ -155,6 +155,7 @@ spec:
             memory: "64Mi"
         securityContext:
           readOnlyRootFilesystem: true
+      {{ if .Values.app.migrations.enabled }}
       - args:
         - source /vault-migrate-secrets/secrets/migrate.env && exec {{ .Values.app.migrations.migration_python_version }} manage.py migrate
         command:
@@ -210,5 +211,6 @@ spec:
       - configMap:
           name: app-cm
         name: app-cm
+      {{ end }}
 
 {{ end }}

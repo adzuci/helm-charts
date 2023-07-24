@@ -1,3 +1,6 @@
+0.8.8
+Proceed with running Django migrations only when it is enabled
+
 0.8.7
 Added additionalLabels env, owner and team for kubecost aggregations using range
 
