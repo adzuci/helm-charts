@@ -39,6 +39,17 @@ app:
 workers: []
     # - name: my-app-worker
     #   command: celery -A my_app worker --loglevel info
+    #   minReplicas: 3
+    #   maxReplicas: 3
+    #   targetCPUUtilizationPercentage: 100
+    #   # Optionally override default worker resource limits like this:
+    #   resources:
+    #     requests:
+    #       cpu: 25m
+    #       memory: 512Mi
+    #     limits:
+    #       cpu: 125m
+    #       memory: 2Gi
 
 newrelic:
     enabled: true
