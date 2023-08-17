@@ -62,11 +62,11 @@ spec:
         name: {{ $worker.name }}
         resources:
           limits:
-            cpu: {{ $worker.resources.limits.cpu | default "125m" }}
-            memory: {{ $worker.resources.limits.memory | default "2Gi" }}
+            cpu: {{ (($worker.resources).limits).cpu | default "125m" }}
+            memory: {{ (($worker.resources).limits).memory | default "2Gi" }}
           requests:
-            cpu: {{ $worker.resources.requests.cpu | default "25m" }}
-            memory: {{ $worker.resources.requests.memory | default "512Mi" }}
+            cpu: {{ (($worker.resources).requests).cpu | default "25m" }}
+            memory: {{ (($worker.resources).requests).memory | default "512Mi" }}
         volumeMounts:
         - mountPath: /vault-api-secrets/secrets
           name: vault-api-secrets
