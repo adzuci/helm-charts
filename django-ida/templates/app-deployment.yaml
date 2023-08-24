@@ -159,7 +159,7 @@ spec:
           readOnlyRootFilesystem: true
       {{ if .Values.app.migrations.enabled }}
       - args:
-        - source /vault-migrate-secrets/secrets/migrate.env && exec {{ .Values.app.migrations.migration_python_version }} manage.py migrate
+        - source /vault-migrate-secrets/secrets/migrate.env && {{ .Values.app.migrations.migration_command }}
         command:
         - /bin/bash
         - -c
