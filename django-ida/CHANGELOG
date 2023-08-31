@@ -1,3 +1,6 @@
+0.8.14
+Feature to allow configurable resource limits for CronJobs
+
 0.8.13
 Add feature to allow custom migration commands
 

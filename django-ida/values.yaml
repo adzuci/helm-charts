@@ -93,3 +93,10 @@ cronjobs: []
     # - name: my-app-retire-old-licenses
     #   schedule: 0 13 * * *
     #   command: /edx/app/my_app/manage.py retire_old_licenses
+    #   resources:
+    #       limits:
+    #           cpu: 100m
+    #           memory: 512Mi
+    #       requests:
+    #           cpu: 25m
+    #           memory: 512Mi

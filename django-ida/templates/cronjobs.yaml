@@ -46,11 +46,11 @@ spec:
             name: {{ $job.name }}
             resources:
               limits:
-                cpu: 100m
-                memory: 512Mi
+                cpu: {{ (($job.resources).limits).cpu | default "100m" }}
+                memory: {{ (($job.resources).limits).memory | default "1Gi" }}
               requests:
-                cpu: 25m
-                memory: 512Mi
+                cpu: {{ (($job.resources).requests).cpu | default "25m" }}
+                memory: {{ (($job.resources).requests).memory | default "512Mi" }}
             volumeMounts:
             - mountPath: /vault-api-secrets/secrets
               name: vault-api-secrets
