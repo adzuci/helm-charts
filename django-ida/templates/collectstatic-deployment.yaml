@@ -163,7 +163,7 @@ spec:
         - name: {{ $env.name }}
           value: {{ $env.value }}
         {{- end }}
-        image: edxops/k8s-cli-utils:f0c63ac1cb531f8e151a9ef74a5d13b85b6db75b
+        image: 257477529851.dkr.ecr.us-east-1.amazonaws.com/k8s-cli-utils:latest
         imagePullPolicy: IfNotPresent
         name: s3-upload
         volumeMounts:
