@@ -14,6 +14,9 @@ metadata:
   {{- if $ingress.external_dns_cloudflare }}
     kubernetes.io/external-dns-cloudflare: "true"
   {{- end }}
+  {{- if hasKey $ingress "client-max-body-size" }}
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ index $ingress "client-max-body-size" }}
+  {{- end }}
   {{- if $ingress.allow_django_admin }}
   {{- else }}
     nginx.ingress.kubernetes.io/configuration-snippet: |-
@@ -22,6 +25,9 @@ metadata:
         deny all;
         return 403;
       }
+    {{- if .Values.newrelic.enabled }}
+      proxy_set_header X-Queue-Start "t=${msec}";
+    {{- end }}
   {{- end }}
   labels:
     app.kubernetes.io/instance: {{ $.Values.app.name }}

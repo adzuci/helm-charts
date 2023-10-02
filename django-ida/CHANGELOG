@@ -1,3 +1,6 @@
+0.8.17
+Feature to add NewRelic HTTP header and client-max-body-size to ingress
+
 0.8.16
 Updated the User ID use in k8s-cli-utils. It was updated in this PR (https://github.com/edx/k8s-cli-utils/pull/14)
 
