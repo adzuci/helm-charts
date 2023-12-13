@@ -101,3 +101,6 @@ cronjobs: []
     #       requests:
     #           cpu: 25m
     #           memory: 512Mi
+
+secrets: 
+    source: vault
