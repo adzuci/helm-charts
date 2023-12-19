@@ -12,8 +12,10 @@ data:
   NEW_RELIC_APP_NAME: {{ .Values.newrelic.app_name }}
   NEW_RELIC_LOG_LEVEL: {{ .Values.newrelic.log_level }}
   S3_ASSET_BUCKET: {{ .Values.collectstatic.s3_bucket }}
+  {{ if eq .Values.secrets.source "vault" }}
   VAULT_ADDR: {{ .Values.vault.vault_addr }}
   VAULT_ROLE: {{ .Values.vault.vault_role }}
+  {{ end }}
   {{ .Values.app.secret_file_name }}: |
     ---
     {{"{{"}} with secret "{{ .Values.vault.secret_name }}?version={{ .Values.vault.secret_version }}" {{"}}"}}

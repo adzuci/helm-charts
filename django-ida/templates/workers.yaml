@@ -72,6 +72,7 @@ spec:
           name: vault-api-secrets
           readOnly: true
       initContainers:
+      {{ if eq .Values.secrets.source "vault" }}
       - env:
         - name: VAULT_ADDR
           valueFrom:
@@ -117,6 +118,7 @@ spec:
           name: vault-api-secrets
         - mountPath: /app-cm
           name: app-cm
+      {{ end }}
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000

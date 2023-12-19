@@ -46,6 +46,7 @@ spec:
             cpu: 5m
             memory: 100Mi
       initContainers:
+      {{ if eq .Values.secrets.source "vault" }}
       - env:
         - name: VAULT_ADDR
           valueFrom:
@@ -133,6 +134,7 @@ spec:
         - mountPath: /tmp/static
           name: app-static
           readOnly: false
+      {{ end }}
       - args:
         - '[[ -n "${S3_ASSET_BUCKET}" ]] && aws s3 sync /tmp/static $S3_ASSET_BUCKET'
         command:
