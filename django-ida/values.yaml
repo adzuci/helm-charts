@@ -65,7 +65,21 @@ collectstatic:
 
 secrets: 
     source: vault
-       
+
+# Placement for secret values if you want to use kubernetes secrets as an alternative to vault 
+# Be sure to put the source as 'kubernetes' for the above secret source
+# Refer to secrets.yaml to see how k8s secrets are generated for each secret in the list
+# Formatting is below
+kubernetesSecrets: []
+#   - name: secret1
+#     data:
+#       username: user1
+#       password: pass1
+#   - name: secret2
+#     data:
+#       username: user2
+#       password: pass2
+
 vault:
     enabled: true
     use_tls: true

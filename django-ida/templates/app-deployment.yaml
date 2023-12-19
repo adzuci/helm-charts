@@ -86,12 +86,14 @@ spec:
           requests:
             cpu: {{ .Values.resources.requests.cpu }}
             memory: {{ .Values.resources.requests.memory }}
+      {{- if eq .Values.secrets.source "vault" }}
         volumeMounts:
         - mountPath: /vault-api-secrets/secrets
           name: vault-api-secrets
           readOnly: true
+      {{- end }}
       initContainers:
-      {{ if eq .Values.secrets.source "vault" }}
+      {{- if eq .Values.secrets.source "vault" }}
       - env:
         - name: VAULT_ADDR
           valueFrom:
@@ -158,7 +160,7 @@ spec:
             memory: "64Mi"
         securityContext:
           readOnlyRootFilesystem: true
-      {{ end }}
+      {{- end }}
       {{ if .Values.app.migrations.enabled }}
       - args:
         - source /vault-migrate-secrets/secrets/migrate.env && {{ .Values.app.migrations.migration_command }}
@@ -204,7 +206,7 @@ spec:
         runAsUser: 1000
       serviceAccountName: {{ .Values.app.service_account_name }}
       volumes:
-      {{ if eq .Values.secrets.source "vault" }}
+      {{- if eq .Values.secrets.source "vault" }}
       - emptyDir:
           medium: Memory
         name: vault-auth-secrets
@@ -217,6 +219,6 @@ spec:
       - configMap:
           name: app-cm
         name: app-cm
-      {{ end }}
+      {{- end }}
 
 {{ end }}
