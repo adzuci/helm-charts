@@ -1,3 +1,6 @@
+0.8.19
+Feature to determine if secrets are pulled from vault or are kubernetes secrets
+
 0.8.18
 Fix ingress configuration snippet so that it is not bound by allow_django_admin
 

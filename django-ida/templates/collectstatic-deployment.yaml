@@ -46,6 +46,7 @@ spec:
             cpu: 5m
             memory: 100Mi
       initContainers:
+      {{- if eq .Values.secrets.source "vault" }}
       - env:
         - name: VAULT_ADDR
           valueFrom:
@@ -91,6 +92,7 @@ spec:
           name: vault-api-secrets
         - mountPath: /app-cm
           name: app-cm
+      {{- end }}
       - args:
         - source /vault-api-secrets/secrets/secret.env && {{ .Values.collectstatic.command }}
         command:

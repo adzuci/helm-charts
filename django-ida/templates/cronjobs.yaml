@@ -56,6 +56,7 @@ spec:
               name: vault-api-secrets
               readOnly: true
           initContainers:
+          {{- if eq .Values.secrets.source "vault" }}
           - env:
             - name: VAULT_ADDR
               valueFrom:
@@ -101,12 +102,14 @@ spec:
               name: vault-api-secrets
             - mountPath: /app-cm
               name: app-cm
+          {{- end }}
           restartPolicy: Never
           securityContext:
             fsGroup: 1000
             runAsGroup: 1000
             runAsUser: 1000
           serviceAccountName: {{ .Values.app.service_account_name }}
+          {{- if eq .Values.secrets.source "vault" }}
           volumes:
           - emptyDir:
               medium: Memory
@@ -117,5 +120,6 @@ spec:
           - configMap:
               name: app-cm
             name: app-cm
+          {{- end }}
 {{- end }}
 {{- end }}
