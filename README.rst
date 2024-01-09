@@ -1,8 +1,23 @@
 #######################
-Helm charts for edx.org
+Helm Charts for edx.org
 #######################
 
-Charts are automatically published by GitHub Actions to https://github.com/edx/helm-repo/
+This repository is primarily for hosting charts used to host edx.org-related Django services.  A `helm chart`_ is a collection of files that describe a related set of Kubernetes resources.  These files are a work in progress and may change at any time.  Some assumptions are currently made including the assumption that nginx-ingress and external-dns are available.  These assumptions may be abstacted out in the future.  Please see https://github.com/openedx/openedx-k8s-harmony for other Open edX related charts. 
+
+Publishing
+**********
+
+Charts are automatically published by GitHub Actions to a private Helm repo for 2U consumption at https://github.com/edx/helm-repo.  This may change in the future.  Note other private 2U charts live in https://github.com/2uinc/helm-charts.
+
+Charts
+======
+
+django-ida
+----------
+
+This chart is for Django services.  See `the changelog`_ for more details.
+
+
 
 Testing
 *******
@@ -46,3 +61,16 @@ To deploy changes locally:
         % argocd app sync development-app-name
 
 #. Check development-app-name works correctly in your local ArgoCD.
+
+Contributions
+*************
+
+This repo is not currently accepting contributions from non-2U employees.
+
+Reporting Security Issues
+*************************
+
+Please do not report security issues in public. Please email security@edx.org.
+
+.. _the changelog: https://github.com/edx/helm-charts/blob/master/django-ida/CHANGELOG
+.. _helm chart: https://helm.sh/docs/topics/charts
