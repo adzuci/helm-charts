@@ -33,11 +33,11 @@ data:
   vault.hcl: |
     "vault" = {
       "vault_agent_token_file" = "/vault-auth-secrets/secrets/.vault-token"
-        ssl {
-          enabled = true
-          verify = true
-          ca_cert = "/etc/ssl/cert.pem"
-        }
+      ssl {
+        enabled = true
+        verify = true
+        ca_cert = "/etc/ssl/cert.pem"
+      }
     }
 {{ else }}
   vault.hcl: |
